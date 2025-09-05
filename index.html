@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biología 2025 - Esquema Interactivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --easy: #2ecc71;
+            --medium: #f39c12;
+            --hard: #e74c3c;
+            --cell-bg: #d5f5e3;
+            --molecule-bg: #fdebd0;
+            --membrane-bg: #d6eaf8;
+            --energy-bg: #f9ebea;
+            --test-bg: #e8f4f8;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 15px;
+            min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .description {
+            max-width: 800px;
+            margin: 0 auto 15px;
+            font-size: 1rem;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            background: var(--light);
+            border: none;
+            border-radius: 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .topics-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .topic {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .topic:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .topic-1 { border-top-color: #3498db; }
+        .topic-2 { border-top-color: #2ecc71; }
+        .topic-3 { border-top-color: #e74c3c; }
+        .topic-4 { border-top-color: #f39c12; }
+        .topic-5 { border-top-color: #9b59b6; }
+        .topic-6 { border-top-color: #1abc9c; }
+        .topic-7 { border-top-color: #d35400; }
+        .topic-8 { border-top-color: #c0392b; }
+        .topic-9 { border-top-color: #16a085; }
+        .topic-10 { border-top-color: #8e44ad; }
+        .topic-11 { border-top-color: #27ae60; }
+        .topic-12 { border-top-color: #2980b9; }
+        
+        .topic-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .topic-number {
+            background-color: var(--secondary);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .topic-title {
+            flex-grow: 1;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .toggle-icon {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .topic-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        
+        .topic-content-inner {
+            padding: 20px;
+        }
+        
+        .topic.active .topic-content {
+            max-height: 2000px;
+            padding: 0;
+        }
+        
+        .topic.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .key-terms, .focus-points {
+            background-color: #f8f9fa;
+            border-left: 3px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .key-terms h4, .focus-points h4 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+        
+        .key-terms h4::before {
+            content: "🔍 ";
+            margin-right: 6px;
+        }
+        
+        .focus-points h4::before {
+            content: "🎯 ";
+            margin-right: 6px;
+        }
+        
+        .key-terms ul, .focus-points ul {
+            padding-left: 20px;
+        }
+        
+        .key-terms li, .focus-points li {
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        button:hover, button:active {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .mark-studied {
+            background-color: var(--success);
+            margin-top: 12px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .mark-studied:hover, .mark-studied:active {
+            background-color: #27ae60;
+        }
+        
+        .progress-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            height: 18px;
+            background-color: #e0e0e0;
+            border-radius: 9px;
+            overflow: hidden;
+            margin-top: 15px;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #27ae60);
+            width: 0%;
+            transition: width 0.6s ease;
+            border-radius: 9px;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--dark);
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+        }
+        
+        /* Test Section */
+        .test-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .test-header h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .test-header p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* Selector de nivel de test */
+        .test-level-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .level-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .level-btn.easy {
+            background-color: var(--easy);
+            color: white;
+        }
+        
+        .level-btn.medium {
+            background-color: var(--medium);
+            color: white;
+        }
+        
+        .level-btn.hard {
+            background-color: var(--hard);
+            color: white;
+        }
+        
+        .level-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--test-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .option:hover, .option:active {
+            background-color: #e8f4f8;
+        }
+        
+        .option input {
+            margin-right: 8px;
+        }
+        
+        .test-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .test-controls button {
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+        
+        #submit-test {
+            background-color: var(--success);
+        }
+        
+        #submit-test:hover, #submit-test:active {
+            background-color: #27ae60;
+        }
+        
+        #reset-test {
+            background-color: var(--warning);
+        }
+        
+        #reset-test:hover, #reset-test:active {
+            background-color: #e67e22;
+        }
+        
+        .results-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .results-header {
+            margin-bottom: 15px;
+        }
+        
+        .score {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 15px 0;
+        }
+        
+        .score-explanation {
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .answer-review {
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .answer-review h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .review-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            font-size: 0.9rem;
+        }
+        
+        .correct {
+            border-left: 3px solid var(--success);
+        }
+        
+        .incorrect {
+            border-left: 3px solid var(--accent);
+        }
+        
+        .review-question {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        
+        .review-answer {
+            margin-bottom: 4px;
+        }
+        
+        .review-correct {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .description {
+                font-size: 1.1rem;
+            }
+            
+            .topics-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .topic-title {
+                font-size: 1.1rem;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        .topic-content-inner p {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        
+        .topic-content-inner ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .topic-content-inner li {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        
+        .topic-content-inner strong {
+            color: var(--primary);
+        }
+        
+        .studied .topic-header {
+            background-color: var(--success);
+        }
+        
+        .studied .topic-number {
+            background-color: #27ae60;
+        }
+        
+        /* Mejoras para iPhone */
+        @media (max-width: 320px) {
+            .topic-header {
+                padding: 12px;
+            }
+            
+            .topic-title {
+                font-size: 0.9rem;
+            }
+            
+            .nav-tab {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Evitar zoom en inputs en iOS */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-dna"></i> Biología 2025 - Primera Prueba Parcial</h1>
+        <p class="description">Esquema interactivo para estudiar el temario completo + Tests de 40 preguntas</p>
+    </header>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="topics"><i class="fas fa-book"></i> Temas</button>
+            <button class="nav-tab" data-tab="test"><i class="fas fa-file-alt"></i> Tests</button>
+        </div>
+
+        <div class="content-section active" id="topics-section">
+            <div class="controls">
+                <button id="expand-all"><i class="fas fa-expand"></i> Expandir todo</button>
+                <button id="collapse-all"><i class="fas fa-compress"></i> Colapsar todo</button>
+                <button id="mark-all-studied"><i class="fas fa-check-double"></i> Marcar todo</button>
+                <button id="reset-progress"><i class="fas fa-redo"></i> Reiniciar</button>
+            </div>
+
+            <div class="progress-container">
+                <h3>Progreso de estudio: <span id="progress-percent">0%</span></h3>
+                <div class="progress-bar">
+                    <div class="progress" id="study-progress"></div>
+                    <div class="progress-text" id="progress-text">0/12 temas completados</div>
+                </div>
+            </div>
+
+            <div class="topics-container">
+                <!-- Tema 1 -->
+                <div class="topic topic-1" id="topic-1">
+                    <div class="topic-header">
+                        <div class="topic-number">1</div>
+                        <div class="topic-title">¿Qué es la Biología? ¿Qué es Ciencia?</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Biología:</strong> Ciencia que estudia la vida y los seres vivos.</p>
+                            <p><strong>Ciencia:</strong> Conocimiento basado en observación, experimentación y razonamiento.</p>
+                            <p><strong>Percepción:</strong> Herramienta subjetiva; susceptible a errores (ilusiones, sesgos).</p>
+                            <p><strong>Método científico:</strong> Observación → Pregunta → Hipótesis → Experimentación → Análisis → Conclusión.</p>
+                            <p><strong>Hipótesis:</strong> Explicación provisional y falsable.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Empirismo</li>
+                                    <li>Falsabilidad</li>
+                                    <li>Método inductivo-deductivo</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Diferenciar entre hipótesis y teoría científica</li>
+                                    <li>Comprender las limitaciones de la percepción humana</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="1"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 2 -->
+                <div class="topic topic-2" id="topic-2">
+                    <div class="topic-header">
+                        <div class="topic-number">2</div>
+                        <div class="topic-title">¿Qué significa estar vivo? Origen de la vida</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Características de los seres vivos:</strong> Organización, metabolismo, homeostasis, reproducción, respuesta a estímulos, evolución.</p>
+                            <p><strong>Teorías del origen de la vida:</strong></p>
+                            <ul>
+                                <li>Generación espontánea (refutada)</li>
+                                <li>Panspermia</li>
+                                <li>Síntesis abiótica (Miller-Urey)</li>
+                                <li>Mundo de ARN</li>
+                            </ul>
+                            <p><strong>Autopoiesis:</strong> Sistemas que se autoorganizan y autorreproducen.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Homeostasis</li>
+                                    <li>Abiogénesis</li>
+                                    <li>LUCA</li>
+                                    <li>Autoorganización</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Relacionar autopoiesis con la célula como sistema autónomo</li>
+                                    <li>Comprender las evidencias del experimento de Miller-Urey</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="2"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 3 -->
+                <div class="topic topic-3" id="topic-3">
+                    <div class="topic-header">
+                        <div class="topic-number">3</div>
+                        <div class="topic-title">¿Qué son las células? Origen celular</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Teoría celular:</strong> Todos los seres vivos están formados por células.</p>
+                            <p><strong>Niveles de organización:</strong> Átomo → biosfera.</p>
+                            <p><strong>LUCA:</strong> Último antepasado común universal.</p>
+                            <p><strong>LECA:</strong> Último antepasado eucariota común.</p>
+                            <p><strong>Endosimbiosis:</strong> Origen de mitocondrias y cloroplastos.</p>
+                            <p><strong>Dominios:</strong> Bacteria, Archaea, Eukarya.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Procariota</li>
+                                    <li>Eucariota</li>
+                                    <li>Simbiosis</li>
+                                    <li>Peptidoglicano</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Explicar la endosimbiosis seriada y sus evidencias</li>
+                                    <li>Diferenciar los tres dominios de la vida</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="3"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 4 -->
+                <div class="topic topic-4" id="topic-4">
+                    <div class="topic-header">
+                        <div class="topic-number">4</div>
+                        <div class="topic-title">Moléculas: Agua, carbohidratos, nucleótidos</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Agua:</strong> Polar, puentes de H, solvente universal.</p>
+                            <p><strong>Carbohidratos:</strong> Energía (glucosa) y estructura (celulosa).</p>
+                            <p><strong>Nucleótidos:</strong> ADN (doble hélice), ARN (transcripción/traducción).</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Polaridad</li>
+                                    <li>Enlace glucosídico</li>
+                                    <li>Transcripción</li>
+                                    <li>Puentes de hidrógeno</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Diferencias entre ADN y ARN</li>
+                                    <li>Importancia del agua como solvente universal</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="4"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 5 -->
+                <div class="topic topic-5" id="topic-5">
+                    <div class="topic-header">
+                        <div class="topic-number">5</div>
+                        <div class="topic-title">Moléculas: Aminoácidos, proteínas, lípidos</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Aminoácidos:</strong> 20 tipos, estructura básica.</p>
+                            <p><strong>Proteínas:</strong> Estructuras (primaria, secundaria, terciaria, cuaternaria).</p>
+                            <p><strong>Lípidos:</strong> Ácidos grasos, fosfolípidos, colesterol.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Enlace peptídico</li>
+                                    <li>Desnaturalización</li>
+                                    <li>Anfipático</li>
+                                    <li>Esteroides</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Relacionar estructura proteica con función</li>
+                                    <li>Diferenciar entre lípidos saponificables e insaponificables</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="5"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 6 -->
+                <div class="topic topic-6" id="topic-6">
+                    <div class="topic-header">
+                        <div class="topic-number">6</div>
+                        <div class="topic-title">Membranas, compartimentos y transporte</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Membranas:</strong> Bicapa lipídica, proteínas, fluidez.</p>
+                            <p><strong>Compartimentalización:</strong> Orgánulos (RER, lisosomas, peroxisomas).</p>
+                            <p><strong>Transporte:</strong> Pasivo (difusión), activo (bombas), vesicular.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Osmosis</li>
+                                    <li>ATPasa</li>
+                                    <li>Endocitosis</li>
+                                    <li>Exocitosis</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Ejemplos de transporte activo vs. pasivo</li>
+                                    <li>Función de los orgánulos en la compartimentalización</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="6"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 7 -->
+                <div class="topic topic-7" id="topic-7">
+                    <div class="topic-header">
+                        <div class="topic-number">7</div>
+                        <div class="topic-title">Flujo de información: Replicación y transcripción</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Replicación:</strong> Semiconservativa, enzimas (helicasa, polimerasa).</p>
+                            <p><strong>Transcripción:</strong> ARNm, ARNt, ARNr.</p>
+                            <p><strong>Diferencias procariotas vs eucariotas:</strong></p>
+                            <ul>
+                                <li>Procariontes: sin núcleo</li>
+                                <li>Eucariontes: procesamiento (splicing, cap 5')</li>
+                            </ul>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Codón</li>
+                                    <li>Promotor</li>
+                                    <li>Intrones</li>
+                                    <li>Exones</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Enzimas clave en la replicación</li>
+                                    <li>Procesamiento del ARN en eucariotas</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="7"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 8 -->
+                <div class="topic topic-8" id="topic-8">
+                    <div class="topic-header">
+                        <div class="topic-number">8</div>
+                        <div class="topic-title">Traducción y expresión génica</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Traducción:</strong> Ribosomas, código genético.</p>
+                            <p><strong>Expresión génica:</strong> Regulación transcripcional y postranscripcional.</p>
+                            <p><strong>Modificaciones postraduccionales:</strong> Plegamiento, glicosilación.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Anticodón</li>
+                                    <li>Ubiquitina</li>
+                                    <li>Factores de transcripción</li>
+                                    <li>Ribosoma</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Código genético universal y degenerado</li>
+                                    <li>Niveles de regulación de la expresión génica</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="8"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 9 -->
+                <div class="topic topic-9" id="topic-9">
+                    <div class="topic-header">
+                        <div class="topic-number">9</div>
+                        <div class="topic-title">Destinación de proteínas y tráfico vesicular</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Citoesqueleto:</strong> Microtúbulos, actina, filamentos intermedios.</p>
+                            <p><strong>Destino de proteínas:</strong> Señales de targeting, RER, Golgi.</p>
+                            <p><strong>Endocitosis/Exocitosis:</strong> Fagocitosis, pinocitosis, secreción.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Clatrina</li>
+                                    <li>COP I y COP II</li>
+                                    <li>Proteasoma</li>
+                                    <li>Péptido señal</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Ruta de una proteína secretora</li>
+                                    <li>Diferenciar entre los tipos de endocitosis</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="9"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 10 -->
+                <div class="topic topic-10" id="topic-10">
+                    <div class="topic-header">
+                        <div class="topic-number">10</div>
+                        <div class="topic-title">Obtención de energía: Mitocondrias y cloroplastos</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Mitocondria:</strong> Respiración celular (glucólisis, Krebs, CTE).</p>
+                            <p><strong>Cloroplasto:</strong> Fotosíntesis (fase luminosa y oscura).</p>
+                            <p><strong>ATP:</strong> Moneda energética.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Fosforilación oxidativa</li>
+                                    <li>Ciclo de Calvin</li>
+                                    <li>Gradiente protónico</li>
+                                    <li>ATP sintasa</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Balance energético de la glucólisis y la respiración</li>
+                                    <li>Etapas de la fotosíntesis y sus productos</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="10"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 11 -->
+                <div class="topic topic-11" id="topic-11">
+                    <div class="topic-header">
+                        <div class="topic-number">11</div>
+                        <div class="topic-title">Comunicación y señalización celular</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Tipos de comunicación:</strong> Paracrina, endocrina, sináptica.</p>
+                            <p><strong>Receptores:</strong> De membrana e intracelulares.</p>
+                            <p><strong>Segundos mensajeros:</strong> AMPc, Ca²⁺.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Ligando</li>
+                                    <li>Quinasa</li>
+                                    <li>GPCR</li>
+                                    <li>Cascada de señalización</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Ejemplo de cascada de AMPc</li>
+                                    <li>Diferenciar entre tipos de receptores</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="11"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema 12 -->
+                <div class="topic topic-12" id="topic-12">
+                    <div class="topic-header">
+                        <div class="topic-number">12</div>
+                        <div class="topic-title">Ciclo celular y división</div>
+                        <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-content-inner">
+                            <p><strong>Ciclo celular:</strong> Fases (G1, S, G2, M), puntos de control.</p>
+                            <p><strong>Mitosis:</strong> Profase, metafase, anafase, telofase.</p>
+                            <p><strong>Muerte celular:</strong> Apoptosis vs necrosis.</p>
+                            
+                            <div class="key-terms">
+                                <h4>Términos clave</h4>
+                                <ul>
+                                    <li>Ciclinas</li>
+                                    <li>CDK</li>
+                                    <li>Huso mitótico</li>
+                                    <li>Citocinesis</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="focus-points">
+                                <h4>Puntos clave</h4>
+                                <ul>
+                                    <li>Regulación del ciclo por ciclinas y CDK</li>
+                                    <li>Diferenciar entre apoptosis y necrosis</li>
+                                </ul>
+                            </div>
+                            
+                            <button class="mark-studied" data-topic="12"><i class="fas fa-check"></i> Marcar como estudiado</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Section -->
+        <div class="content-section" id="test-section">
+            <div class="test-container">
+                <div class="test-header">
+                    <h2><i class="fas fa-file-alt"></i> Tests de Biología - 40 Preguntas</h2>
+                    <p>Evalúa tus conocimientos con diferentes niveles de dificultad</p>
+                </div>
+                
+                <div class="test-level-selector">
+                    <button class="level-btn easy active" data-level="easy">Fácil</button>
+                    <button class="level-btn medium" data-level="medium">Medio</button>
+                    <button class="level-btn hard" data-level="hard">Difícil</button>
+                </div>
+                
+                <form id="biology-test">
+                    <!-- Las preguntas se cargarán dinámicamente según el nivel seleccionado -->
+                </form>
+                
+                <div class="test-controls">
+                    <button id="submit-test"><i class="fas fa-check-circle"></i> Finalizar Test</button>
+                    <button id="reset-test"><i class="fas fa-redo"></i> Reiniciar Test</button>
+                </div>
+            </div>
+            
+            <!-- Results Section -->
+            <div class="results-container" id="results-section">
+                <div class="results-header">
+                    <h2><i class="fas fa-chart-bar"></i> Resultados del Test</h2>
+                    <p>Tu desempeño en el test de Biología</p>
+                </div>
+                
+                <div class="score" id="test-score">0/40</div>
+                
+                <div class="score-explanation" id="score-explanation">
+                    <!-- Aquí se mostrará una explicación basada en el puntaje -->
+                </div>
+                
+                <div class="answer-review">
+                    <h3>Revisión de respuestas</h3>
+                    <div id="answers-container">
+                        <!-- Aquí se mostrarán las respuestas correctas e incorrectas -->
+                    </div>
+                </div>
+                
+                <button id="retry-test"><i class="fas fa-redo"></i> Intentar de nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Esquema interactivo de Biología 2025 - Primera Prueba Parcial</p>
+        <p>© 2025 - Herramienta de estudio</p>
+    </footer>
+
+    <script>
+        // Base de datos de preguntas por nivel de dificultad
+        const questionDatabase = {
+            easy: [
+                {
+                    question: "¿Qué es la Biología?",
+                    options: [
+                        "Ciencia que estudia la vida y los seres vivos",
+                        "Ciencia que estudia la Tierra y sus componentes",
+                        "Ciencia que estudia las reacciones químicas",
+                        "Ciencia que estudia el universo"
+                    ],
+                    correct: "a"
+                },
+                {
+                    question: "¿Cuál de estas características NO es propia de los seres vivos?",
+                    options: [
+                        "Homeostasis",
+                        "Metabolismo",
+                        "Conductividad eléctrica",
+                        "Reproducción"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "Según la teoría celular, ¿de dónde provienen todas las células?",
+                    options: [
+                        "De generación espontánea",
+                        "De células preexistentes",
+                        "De materia inorgánica",
+                        "De arcilla y minerales"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué molécula es conocida como el 'solvente universal'?",
+                    options: [
+                        "Etanol",
+                        "Agua",
+                        "Benceno",
+                        "Aceite"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Cuál de estos orgánulos es responsable de la producción de energía?",
+                    options: [
+                        "Núcleo",
+                        "Mitocondria",
+                        "Retículo endoplásmico",
+                        "Aparato de Golgi"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso utilizan las plantas para convertir la luz solar en energía?",
+                    options: [
+                        "Respiración celular",
+                        "Fotosíntesis",
+                        "Fermentación",
+                        "Digestión"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Cuál de estas es la unidad básica de la vida?",
+                    options: [
+                        "Átomo",
+                        "Molécula",
+                        "Célula",
+                        "Tejido"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿Qué tipo de organismo produce su propio alimento?",
+                    options: [
+                        "Heterótrofo",
+                        "Autótrofo",
+                        "Descomponedor",
+                        "Parásito"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué científicos propusieron el modelo de doble hélice del ADN?",
+                    options: [
+                        "Watson y Crick",
+                        "Darwin y Wallace",
+                        "Mendel y Morgan",
+                        "Pasteur y Koch"
+                    ],
+                    correct: "a"
+                },
+                {
+                    question: "¿Qué organelo contiene el material genético en células eucariotas?",
+                    options: [
+                        "Mitocondria",
+                        "Núcleo",
+                        "Cloroplasto",
+                        "Ribosoma"
+                    ],
+                    correct: "b"
+                },
+                // 30 preguntas más para completar 40...
+                {
+                    question: "¿Qué proceso permite a los seres vivos mantener un ambiente interno estable?",
+                    options: [
+                        "Metabolismo",
+                        "Homeostasis",
+                        "Adaptación",
+                        "Evolución"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué molécula almacena y transmite información genética?",
+                    options: [
+                        "Proteína",
+                        "Lípido",
+                        "Carbohidrato",
+                        "ADN"
+                    ],
+                    correct: "d"
+                },
+                {
+                    question: "¿Qué científico es conocido como el 'padre de la genética'?",
+                    options: [
+                        "Charles Darwin",
+                        "Gregor Mendel",
+                        "Louis Pasteur",
+                        "James Watson"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso implica el paso de características de padres a hijos?",
+                    options: [
+                        "Adaptación",
+                        "Herencia",
+                        "Evolución",
+                        "Selección natural"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué reino incluye a los hongos?",
+                    options: [
+                        "Plantae",
+                        "Animalia",
+                        "Fungi",
+                        "Protista"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿Qué proceso celular produce gametos?",
+                    options: [
+                        "Mitosis",
+                        "Meiosis",
+                        "Fotosíntesis",
+                        "Respiración"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué organelo es responsable de la fotosíntesis en las plantas?",
+                    options: [
+                        "Mitocondria",
+                        "Cloroplasto",
+                        "Núcleo",
+                        "Vacuola"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué científico propuso la teoría de la evolución por selección natural?",
+                    options: [
+                        "Gregor Mendel",
+                        "Charles Darwin",
+                        "Louis Pasteur",
+                        "Carl Linnaeus"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso convierte el alimento en energía utilizable?",
+                    options: [
+                        "Fotosíntesis",
+                        "Respiración celular",
+                        "Digestión",
+                        "Circulación"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué tipo de célula tiene núcleo definido?",
+                    options: [
+                        "Procariota",
+                        "Eucariota",
+                        "Bacteriana",
+                        "Arquea"
+                    ],
+                    correct: "b"
+                },
+                // 20 preguntas más...
+                {
+                    question: "¿Qué molécula es la principal fuente de energía para las células?",
+                    options: [
+                        "ADN",
+                        "ATP",
+                        "ARN",
+                        "Proteína"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso implica el cambio en las características hereditarias de una población?",
+                    options: [
+                        "Adaptación",
+                        "Evolución",
+                        "Mutación",
+                        "Selección natural"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué científico descubrió los penicilina?",
+                    options: [
+                        "Louis Pasteur",
+                        "Alexander Fleming",
+                        "Robert Koch",
+                        "Joseph Lister"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué tipo de reproducción implica un solo progenitor?",
+                    options: [
+                        "Sexual",
+                        "Asexual",
+                        "Fecundación",
+                        "Germinación"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué organelo digiere materiales en la célula?",
+                    options: [
+                        "Mitocondria",
+                        "Lisosoma",
+                        "Ribosoma",
+                        "Aparato de Golgi"
+                    ],
+                    correct: "b"
+                },
+                // 15 preguntas más...
+                {
+                    question: "¿Qué proceso implica el movimiento de moléculas de áreas de alta concentración a áreas de baja concentración?",
+                    options: [
+                        "Ósmosis",
+                        "Difusión",
+                        "Transporte activo",
+                        "Fagocitosis"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué reino incluye organismos unicelulares con núcleo?",
+                    options: [
+                        "Monera",
+                        "Protista",
+                        "Fungi",
+                        "Plantae"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué vitamina se produce cuando la piel se expone a la luz solar?",
+                    options: [
+                        "Vitamina A",
+                        "Vitamina C",
+                        "Vitamina D",
+                        "Vitamina K"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿Qué proceso convierte el dióxido de carbono y el agua en glucosa?",
+                    options: [
+                        "Respiración celular",
+                        "Fotosíntesis",
+                        "Fermentación",
+                        "Digestión"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué tipo de ARN lleva la información del ADN a los ribosomas?",
+                    options: [
+                        "ARN mensajero",
+                        "ARN de transferencia",
+                        "ARN ribosómico",
+                        "ARN nuclear"
+                    ],
+                    correct: "a"
+                },
+                // 10 preguntas más...
+                {
+                    question: "¿Qué proceso implica la división del núcleo celular?",
+                    options: [
+                        "Citocinesis",
+                        "Mitosis",
+                        "Meiosis",
+                        "Fisión binaria"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué científico propuso la teoría de los gérmenes de la enfermedad?",
+                    options: [
+                        "Alexander Fleming",
+                        "Louis Pasteur",
+                        "Robert Koch",
+                        "Joseph Lister"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué estructura celular controla lo que entra y sale de la célula?",
+                    options: [
+                        "Pared celular",
+                        "Membrana plasmática",
+                        "Citoplasma",
+                        "Núcleo"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso produce células haploides?",
+                    options: [
+                        "Mitosis",
+                        "Meiosis",
+                        "Fisión binaria",
+                        "Gemación"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué reino incluye a las bacterias?",
+                    options: [
+                        "Protista",
+                        "Fungi",
+                        "Monera",
+                        "Plantae"
+                    ],
+                    correct: "c"
+                },
+                // 5 preguntas más para completar 40...
+                {
+                    question: "¿Qué organelo produce proteínas?",
+                    options: [
+                        "Mitocondria",
+                        "Aparato de Golgi",
+                        "Ribosoma",
+                        "Retículo endoplásmico"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿Qué proceso implica el movimiento de agua a través de una membrana semipermeable?",
+                    options: [
+                        "Difusión",
+                        "Ósmosis",
+                        "Transporte activo",
+                        "Diálisis"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué científico clasificó los organismos en un sistema de nomenclatura binomial?",
+                    options: [
+                        "Charles Darwin",
+                        "Gregor Mendel",
+                        "Carl Linnaeus",
+                        "Louis Pasteur"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿Qué tipo de tejido transporta nutrientes en las plantas?",
+                    options: [
+                        "Epidermis",
+                        "Xilema",
+                        "Parénquima",
+                        "Meristemo"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso convierte la glucosa en energía en ausencia de oxígeno?",
+                    options: [
+                        "Respiración aeróbica",
+                        "Fotosíntesis",
+                        "Fermentación",
+                        "Digestión"
+                    ],
+                    correct: "c"
+                }
+            ],
+            medium: [
+                {
+                    question: "¿Cuál es la función principal de las mitocondrias?",
+                    options: [
+                        "Síntesis de proteínas",
+                        "Producción de energía (ATP)",
+                        "Digestión celular",
+                        "Almacenamiento de material genético"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué proceso permite a las plantas convertir la luz solar en energía?",
+                    options: [
+                        "Respiración celular",
+                        "Fotosíntesis",
+                        "Fermentación",
+                        "Digestión"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Cuál de estas biomoléculas es la principal fuente de energía para los seres vivos?",
+                    options: [
+                        "Proteínas",
+                        "Lípidos",
+                        "Carbohidratos",
+                        "Ácidos nucleicos"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿En qué fase de la mitosis los cromosomas se alinean en el ecuador de la célula?",
+                    options: [
+                        "Profase",
+                        "Metafase",
+                        "Anafase",
+                        "Telofase"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué tipo de ARN transporta aminoácidos a los ribosomas durante la síntesis de proteínas?",
+                    options: [
+                        "ARN mensajero (ARNm)",
+                        "ARN de transferencia (ARNt)",
+                        "ARN ribosómico (ARNr)",
+                        "ARN pequeño nuclear (ARNpn)"
+                    ],
+                    correct: "b"
+                },
+                // 35 preguntas más para completar 40...
+            ],
+            hard: [
+                {
+                    question: "¿En qué fase de la mitosis se alinean los cromosomas en el plano ecuatorial?",
+                    options: [
+                        "Profase",
+                        "Metafase",
+                        "Anafase",
+                        "Telofase"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué enzima es responsable de la síntesis de ARN durante la transcripción?",
+                    options: [
+                        "ADN polimerasa",
+                        "ARN polimerasa",
+                        "Helicasa",
+                        "Ligasa"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Cuál de estos procesos ocurre en el citoplasma de las células eucariotas?",
+                    options: [
+                        "Replicación del ADN",
+                        "Traducción",
+                        "Transcripción",
+                        "Splicing del ARN"
+                    ],
+                    correct: "b"
+                },
+                {
+                    question: "¿Qué organelo es responsable de la modificación, clasificación y empaquetamiento de proteínas para su secreción?",
+                    options: [
+                        "Mitocondria",
+                        "Retículo endoplásmico rugoso",
+                        "Aparato de Golgi",
+                        "Lisosoma"
+                    ],
+                    correct: "c"
+                },
+                {
+                    question: "¿Cuál de estas no es una etapa de la respiración celular?",
+                    options: [
+                        "Glucólisis",
+                        "Ciclo de Krebs",
+                        "Cadena transportadora de electrones",
+                        "Ciclo de Calvin"
+                    ],
+                    correct: "d"
+                },
+                // 35 preguntas más para completar 40...
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navegación por pestañas
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Activar pestaña seleccionada
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mostrar sección correspondiente
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === `${targetTab}-section`) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Funcionalidad para expandir/colapsar temas
+            const topicHeaders = document.querySelectorAll('.topic-header');
+            
+            topicHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const topic = this.parentElement;
+                    topic.classList.toggle('active');
+                });
+            });
+            
+            // Botones de control
+            document.getElementById('expand-all').addEventListener('click', function() {
+                document.querySelectorAll('.topic').forEach(topic => {
+                    topic.classList.add('active');
+                });
+            });
+            
+            document.getElementById('collapse-all').addEventListener('click', function() {
+                document.querySelectorAll('.topic').forEach(topic => {
+                    topic.classList.remove('active');
+                });
+            });
+            
+            document.getElementById('reset-progress').addEventListener('click', function() {
+                studiedCount = 0;
+                document.querySelectorAll('.topic').forEach(topic => {
+                    topic.classList.remove('studied');
+                });
+                updateProgress();
+                localStorage.setItem('biologyProgress', studiedCount);
+            });
+            
+            // Funcionalidad para marcar como estudiado y seguimiento de progreso
+            const markButtons = document.querySelectorAll('.mark-studied');
+            const totalTopics = 12;
+            let studiedCount = 0;
+            
+            // Recuperar progreso previo si existe
+            if (localStorage.getItem('biologyProgress')) {
+                studiedCount = parseInt(localStorage.getItem('biologyProgress'));
+                // Marcar los temas estudiados
+                for (let i = 1; i <= studiedCount; i++) {
+                    const topic = document.getElementById(`topic-${i}`);
+                    if (topic) topic.classList.add('studied');
+                }
+                updateProgress();
+            }
+            
+            markButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const topicId = this.getAttribute('data-topic');
+                    const topic = document.getElementById(`topic-${topicId}`);
+                    
+                    if (!topic.classList.contains('studied')) {
+                        topic.classList.add('studied');
+                        studiedCount++;
+                        updateProgress();
+                        // Guardar en localStorage
+                        localStorage.setItem('biologyProgress', studiedCount);
+                    }
+                });
+            });
+            
+            document.getElementById('mark-all-studied').addEventListener('click', function() {
+                studiedCount = totalTopics;
+                document.querySelectorAll('.topic').forEach(topic => {
+                    topic.classList.add('studied');
+                });
+                updateProgress();
+                localStorage.setItem('biologyProgress', studiedCount);
+            });
+            
+            function updateProgress() {
+                const progressPercentage = (studiedCount / totalTopics) * 100;
+                document.getElementById('progress-percent').textContent = `${Math.round(progressPercentage)}%`;
+                document.getElementById('study-progress').style.width = `${progressPercentage}%`;
+                document.getElementById('progress-text').textContent = `${studiedCount}/${totalTopics} temas completados`;
+            }
+            
+            // Inicializar la barra de progreso
+            updateProgress();
+            
+            // Selector de nivel de test
+            const levelButtons = document.querySelectorAll('.level-btn');
+            let currentLevel = 'easy';
+            
+            levelButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const level = this.getAttribute('data-level');
+                    currentLevel = level;
+                    
+                    // Actualizar botones activos
+                    levelButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Cargar preguntas del nivel seleccionado
+                    loadTestQuestions(currentLevel);
+                });
+            });
+            
+            // Cargar preguntas iniciales (nivel fácil)
+            loadTestQuestions('easy');
+            
+            // Función para cargar preguntas en el formulario
+            function loadTestQuestions(level) {
+                const form = document.getElementById('biology-test');
+                form.innerHTML = '';
+                
+                const questions = questionDatabase[level];
+                
+                questions.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.innerHTML = `
+                        <div class="question-text">${index + 1}. ${q.question}</div>
+                        <div class="options">
+                            ${q.options.map((option, i) => `
+                                <label class="option">
+                                    <input type="radio" name="q${index + 1}" value="${String.fromCharCode(97 + i)}">
+                                    ${String.fromCharCode(97 + i)}) ${option}
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                    form.appendChild(questionDiv);
+                });
+            }
+            
+            // Funcionalidad del test
+            document.getElementById('submit-test').addEventListener('click', function() {
+                calculateScore(currentLevel);
+            });
+            
+            document.getElementById('reset-test').addEventListener('click', function() {
+                document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                });
+            });
+            
+            document.getElementById('retry-test').addEventListener('click', function() {
+                document.getElementById('results-section').style.display = 'none';
+                document.getElementById('reset-test').click();
+            });
+            
+            function calculateScore(level) {
+                const questions = questionDatabase[level];
+                let score = 0;
+                const totalQuestions = questions.length;
+                const userAnswers = {};
+                
+                // Recopilar respuestas del usuario
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (selectedOption) {
+                        userAnswers[`q${i}`] = selectedOption.value;
+                        if (userAnswers[`q${i}`] === questions[i-1].correct) {
+                            score++;
+                        }
+                    }
+                }
+                
+                // Mostrar resultados
+                document.getElementById('test-score').textContent = `${score}/${totalQuestions}`;
+                
+                // Mostrar explicación basada en el puntaje
+                const scoreExplanation = document.getElementById('score-explanation');
+                if (score >= 36) {
+                    scoreExplanation.innerHTML = '<p>¡Excelente! Tienes un dominio excepcional del tema.</p>';
+                } else if (score >= 30) {
+                    scoreExplanation.innerHTML = '<p>¡Muy bien! Tienes un buen conocimiento del tema.</p>';
+                } else if (score >= 24) {
+                    scoreExplanation.innerHTML = '<p>Buen trabajo. Sigue estudiando para mejorar.</p>';
+                } else {
+                    scoreExplanation.innerHTML = '<p>Necesitas repasar más los temas. ¡Sigue estudiando!</p>';
+                }
+                
+                // Generar revisión de respuestas
+                const answersContainer = document.getElementById('answers-container');
+                answersContainer.innerHTML = '';
+                
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const reviewItem = document.createElement('div');
+                    reviewItem.classList.add('review-item');
+                    
+                    if (userAnswers[`q${i}`] === questions[i-1].correct) {
+                        reviewItem.classList.add('correct');
+                    } else {
+                        reviewItem.classList.add('incorrect');
+                    }
+                    
+                    reviewItem.innerHTML = `
+                        <div class="review-question">${i}. ${questions[i-1].question}</div>
+                        <div class="review-answer">Tu respuesta: ${userAnswers[`q${i}`] || 'No respondida'}</div>
+                        <div class="review-correct">Respuesta correcta: ${questions[i-1].correct}</div>
+                    `;
+                    
+                    answersContainer.appendChild(reviewItem);
+                }
+                
+                // Mostrar sección de resultados
+                document.getElementById('results-section').style.display = 'block';
+                document.getElementById('results-section').scrollIntoView({behavior: 'smooth'});
+            }
+        });
+    </script>
+</body>
+</html>
